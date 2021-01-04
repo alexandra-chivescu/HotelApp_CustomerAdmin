@@ -168,6 +168,11 @@ public class UserController {
         return new ModelAndView("redirect:/adminhomepage");
     }
 
+    @GetMapping("c/edit/{id}")
+    public ModelAndView editClientData(@PathVariable(value="id") int id, Model model) {
+        Client client = clientDao.findById(id);
+    }
+
     @PostMapping("/add-to-cart")
     public ModelAndView addToCart(@RequestParam("checkInDate") String checkInDate,
                                   @RequestParam("checkOutDate") String checkOutDate,
