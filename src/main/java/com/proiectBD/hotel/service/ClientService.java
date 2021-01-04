@@ -30,6 +30,8 @@ public class ClientService {
         client.setCnp(cnp);
         client.setTelefon(telefon);
         client.setEmail(email);
+        client.setCont_online("nu");
+        clientDao.save(client);
     }
 
     public List<Client> getUsersByEmail(String email) {

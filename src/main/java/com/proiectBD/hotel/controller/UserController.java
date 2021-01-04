@@ -168,9 +168,20 @@ public class UserController {
         return new ModelAndView("redirect:/adminhomepage");
     }
 
-    @GetMapping("c/edit/{id}")
-    public ModelAndView editClientData(@PathVariable(value="id") int id, Model model) {
-        Client client = clientDao.findById(id);
+//    @GetMapping("c/edit/{id}")
+//    public ModelAndView editClientData(@PathVariable(value="id") int id, Model model) {
+//        Client client = clientDao.findById(id);
+//    }
+
+    @GetMapping("/add-new-client")
+    public ModelAndView AddNewClient(@RequestParam("nume") String nume,
+                                     @RequestParam("prenume") String prenume,
+                                     @RequestParam("cnp") String cnp,
+                                     @RequestParam("telefon") String telefon,
+                                     @RequestParam("email") String email) {
+
+    clientService.save_new_client(nume, prenume, cnp, telefon, email);
+    return new ModelAndView("redirect:/adminhomepage");
     }
 
     @PostMapping("/add-to-cart")
