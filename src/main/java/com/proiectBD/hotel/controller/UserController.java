@@ -1,10 +1,7 @@
 package com.proiectBD.hotel.controller;
 
 import com.proiectBD.hotel.dao.*;
-import com.proiectBD.hotel.model.Camera;
-import com.proiectBD.hotel.model.Client;
-import com.proiectBD.hotel.model.Rezervare;
-import com.proiectBD.hotel.model.Tip_camera;
+import com.proiectBD.hotel.model.*;
 import com.proiectBD.hotel.security.ClientSession;
 import com.proiectBD.hotel.security.Encryption;
 import com.proiectBD.hotel.service.CameraService;
@@ -16,18 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
 public class UserController {
+
+    @Autowired
+    RecenzieDao recenzieDao;
 
     @Autowired
     ClientSession clientSession;
@@ -59,6 +57,11 @@ public class UserController {
     @Autowired
     AngajatDao angajatDao;
 
+    @Autowired
+    Salarii_deptDao salarii_deptDao;
+
+    @Autowired
+    Date_facturaDao date_facturaDao;
 
     @GetMapping("/menu")
     public ModelAndView menu() {
@@ -168,10 +171,23 @@ public class UserController {
         return new ModelAndView("redirect:/adminhomepage");
     }
 
-//    @GetMapping("c/edit/{id}")
-//    public ModelAndView editClientData(@PathVariable(value="id") int id, Model model) {
-//        Client client = clientDao.findById(id);
-//    }
+    @GetMapping("c/edit/{id}")
+    public ModelAndView editClientData(@PathVariable(value="id") int id, Model model) {
+        Client client = clientDao.findById(id);
+        model.addAttribute("id_modific", id);
+        return new ModelAndView("redirect:/adminhomepage");
+    }
+
+    @GetMapping("/finish-edit-client")
+    public ModelAndView FinishEditClient(@RequestParam("id_client") int id_client,
+                                   @RequestParam("nume") String nume,
+                                   @RequestParam("prenume") String prenume,
+                                   @RequestParam("cnp") String cnp,
+                                   @RequestParam("telefon") String telefon,
+                                   @RequestParam("email") String email) {
+        clientService.modifyClientById(id_client, nume, prenume, cnp, telefon, email);
+        return new ModelAndView("redirect:/adminhomepage");
+    }
 
     @GetMapping("/add-new-client")
     public ModelAndView AddNewClient(@RequestParam("nume") String nume,
@@ -183,6 +199,68 @@ public class UserController {
     clientService.save_new_client(nume, prenume, cnp, telefon, email);
     return new ModelAndView("redirect:/adminhomepage");
     }
+
+    @GetMapping("/recenzii")
+    public ModelAndView tabelRecenzii() {
+        ModelAndView modelAndView = new ModelAndView("recenzii.html");
+        List<Recenzie> recenzii = recenzieDao.findAll();
+        modelAndView.addObject("recenzii", recenzii);
+        return modelAndView;
+    }
+
+    @GetMapping("recenzie/delete/{id}")
+    public ModelAndView deleteRecenzie(@PathVariable(value="id") int id, Model model) {
+        Recenzie recenzie = recenzieDao.findById(id);
+        recenzieDao.delete(recenzie);
+        model.addAttribute("recenzii",recenzieDao.findAll());
+        return new ModelAndView("redirect:/recenzii");
+    }
+
+    @GetMapping("/tabelrezervari")
+    public ModelAndView tabelRezervari() {
+        ModelAndView modelAndView = new ModelAndView("tabelrezervari.html");
+        List<Rezervare> rezervari = rezervareDao.findAll();
+        modelAndView.addObject("rezervari", rezervari);
+        return modelAndView;
+    }
+
+    @GetMapping("rezervare/delete/{id}")
+    public ModelAndView deleteRezervare(@PathVariable(value="id") int id, Model model) {
+        Rezervare rezervare = rezervareDao.findById(id);
+        rezervareDao.delete(rezervare);
+        model.addAttribute("rezervari",rezervareDao.findAll());
+        return new ModelAndView("redirect:/tabelrezervari");
+    }
+
+    @GetMapping("/add-new-rezervare")
+    public ModelAndView AddNewRezervare(@RequestParam("id_client") int id_client,
+                                     @RequestParam("zi_sosire") String zi_sosire,
+                                     @RequestParam("zi_plecare") String zi_plecare,
+                                     @RequestParam("plata_avans") Float plata_avans,
+                                     @RequestParam("nr_adulti") int nr_adulti,
+                                     @RequestParam("nr_copii") int nr_copii,
+                                     @RequestParam("pat_suplimentar") int pat_suplimentar) {
+
+        rezervareService.save_new_rezervare(id_client, zi_sosire, zi_plecare, plata_avans, nr_adulti, nr_copii, pat_suplimentar);
+        return new ModelAndView("redirect:/tabelrezervari");
+    }
+
+    @GetMapping("/tabelfacturi")
+    public ModelAndView tabelFacturi() {
+        ModelAndView modelAndView = new ModelAndView("tabelfacturi.html");
+        List<Date_factura> date_facturi = date_facturaDao.findAll();
+        modelAndView.addObject("facturi", date_facturi);
+        return modelAndView;
+    }
+
+    @GetMapping("/tabelsalarii")
+    public ModelAndView tabelSalarii() {
+        ModelAndView modelAndView = new ModelAndView("tabelsalarii.html");
+        List<Salarii_departamente> salarii = salarii_deptDao.findAll();
+        modelAndView.addObject("salarii", salarii);
+        return modelAndView;
+    }
+
 
     @PostMapping("/add-to-cart")
     public ModelAndView addToCart(@RequestParam("checkInDate") String checkInDate,

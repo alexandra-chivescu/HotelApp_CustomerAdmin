@@ -13,6 +13,10 @@ public class Recenzie {
     private String subiect;
     private String data;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_client", referencedColumnName = "id_client", insertable = false, updatable = false)
+    private Client client;
+
     public int getId_recenzie() {
         return id_recenzie;
     }

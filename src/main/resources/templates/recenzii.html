@@ -86,84 +86,36 @@
 <br>
 
 <div class="center bg-white p-3 mb-3 mt-5 rounded" style="width:100%; padding-left:15px; padding-right:15px; margin-left:10px; margin-right:10px;">
-        <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
-                <thead>
-                <tr>
-                    <th scope="col">Id_client </th>
-                    <th scope="col">Nume</th>
-                    <th scope="col">Prenume</th>
-                    <th scope="col">Cnp</th>
-                    <th scope="col">Telefon</th>
-                    <th scope="col">Cont_online</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Parola</th>
-                    <th scope="col">Editare</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="c,iStat:${client}"
-                    th:style="${iStat.odd}? 'font-weight: bold;'"
-                    th:alt-title="${iStat.even}? 'even' : 'odd'"
-                    th:with="one=1">
-                    <th:block th:if="${c.id_client != id_modific}">
-                        <td style = "word-wrap: break-word;" th:text="${c.id_client}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.nume}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.prenume}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.cnp}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.telefon}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.cont_online}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.email}"></td>
-                        <td style = "word-wrap: break-word;" th:text="${c.parola}"></td>
-                        <td><a th:href="@{/c/delete/{id}(id=${c.id_client})}" class="btn btn-primary"><i class="fas fa-trash-alt"></i></a>
-                            <a th:href="@{/c/edit/{id}(id=${c.id_client})}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
-                     </th:block>
-                    <th:block th:if="${c.id_client} == ${id_modific}">
-                        <form action="finish-edit-client" method="get">
-                            <td name = "id_client" style = "word-wrap: break-word;" th:text="${c.id_client}"></td>
-                            <td><input name="nume" class="form-control"></td>
-                            <td><input name="prenume" class="form-control"></td>
-                            <td><input name="cnp" class="form-control"></td>
-                            <td><input name="telefon" class="form-control"></td>
-                            <td style = "word-wrap: break-word;" th:text="${c.cont_online}"></td>
-                            <td><input name="email" class="form-control"></td>
-                            <td style = "word-wrap: break-word;" th:text="${c.parola}"></td>
-                            <td><button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button></td>
-                        </form>
-                     </th:block>
-
-                </tr>
-                </tbody>
-        </table>
-        <form action="add-new-client" method="get">
-            <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
-                <thead>
-                <tr>
-                    <th scope="col">Nume</th>
-                    <th scope="col">Prenume</th>
-                    <th scope="col">Cnp</th>
-                    <th scope="col">Telefon</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Adauga client</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input name="nume" class="form-control"></td>
-                    <td><input name="prenume" class="form-control"></td>
-                    <td><input name="cnp" class="form-control"></td>
-                    <td><input name="telefon" class="form-control"></td>
-                    <td><input name="email" class="form-control"></td>
-                    <td><button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button></td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
-        <br>
-        <br>
-        <br>
-        <form action="/logout">
-            <button type="submit" class = "btn btn-secondary" style = "color: #fff; background-color: #fe9736; border-color: #fe9736;">Logout</button>
-        </form>
+    <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+        <thead>
+        <tr>
+            <th scope="col">Id_recenzie</th>
+            <th scope="col">Id_client</th>
+            <th scope="col">Subiect</th>
+            <th scope="col">Data</th>
+            <th scope="col">Editare</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recenzie,iStat:${recenzii}"
+            th:style="${iStat.odd}? 'font-weight: bold;'"
+            th:alt-title="${iStat.even}? 'even' : 'odd'"
+            th:with="one=1">
+                <td style = "word-wrap: break-word;" th:text="${recenzie.id_recenzie}"></td>
+                <td style = "word-wrap: break-word;" th:text="${recenzie.id_client}"></td>
+                <td style = "word-wrap: break-word;" th:text="${recenzie.subiect}"></td>
+                <td style = "word-wrap: break-word;" th:text="${recenzie.data}"></td>
+                <td><a th:href="@{/recenzie/delete/{id}(id=${recenzie.id_recenzie})}" class="btn btn-primary"><i class="fas fa-trash-alt"></i></a>
+                    <a th:href="@{/recenzie/edit/{id}(id=${recenzie.id_recenzie})}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <form action="/logout">
+        <button type="submit" class = "btn btn-secondary" style = "color: #fff; background-color: #fe9736; border-color: #fe9736;">Logout</button>
+    </form>
 </div>
 </body>
 </html>

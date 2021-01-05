@@ -34,7 +34,20 @@ public class ClientService {
         clientDao.save(client);
     }
 
+    public void modifyClientById(int id, String nume, String prenume, String cnp, String telefon, String email ) {
+        Client client_update = clientDao.findById(id);
+        client_update.setNume(nume);
+        client_update.setPrenume(prenume);
+        client_update.setCnp(cnp);
+        client_update.setTelefon(telefon);
+        client_update.setEmail(email);
+        clientDao.save(client_update);
+        //aici trebuie sa modific si in baza de date
+    }
+
     public List<Client> getUsersByEmail(String email) {
         return clientDao.findByEmail(email);
     }
+
+
 }

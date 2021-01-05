@@ -1,6 +1,7 @@
 package com.proiectBD.hotel.dao;
 
 
+import com.proiectBD.hotel.model.Client;
 import com.proiectBD.hotel.model.Rezervare;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -21,5 +22,7 @@ public interface RezervareDao extends CrudRepository<Rezervare, Integer> {
             "join tip_camera on camera.id_tip = tip_camera.id_tip \n" +
             "where tip_camera.id_tip = :id_tip_cautat", nativeQuery = true)
     List<Rezervare> findRezervareTipCautat(int id_tip_cautat);
+
+    Rezervare findById(int id);
 
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="custom.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+    body {
+    background: linear-gradient(90deg, rgba(254,151,54,1) 0%, rgba(255,208,37,1) 8%, rgba(255,240,158,1) 16%, rgba(254,151,54,1) 100%);
+    background-size: 400% 400%;
+    }
+    </style>
+</head>
+
+<body>
+<div class = "container w-50 bg-white p-3 mb-3 mt-5 rounded">
+    <h1 class= "text-center pt-5">Login</h1>
+    <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+        <thead>
+        <tr>
+            <th scope="col">Nume</th>
+            <th scope="col">Prenume</th>
+            <th scope="col">Cnp</th>
+            <th scope="col">Telefon</th>
+            <th scope="col">Email</th>
+            <th scope="col">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form action="edit-client-form" method="get">
+                <td><input name="nume" class="form-control"></td>
+                <td><input name="prenume" class="form-control"></td>
+                <td><input name="cnp" class="form-control"></td>
+                <td><input name="telefon" class="form-control"></td>
+                <td><input name="email" class="form-control"></td>
+                <td><button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+        <button type = "submit" class = "btn btn-primary" style = "color: #fff; background-color: #fe9736; border-color: #fe9736;">Login</button>
+        <hr/>
+        <br>
+        <br>
+        <br>
+    </form>
+</div>
+</body>
+</html>

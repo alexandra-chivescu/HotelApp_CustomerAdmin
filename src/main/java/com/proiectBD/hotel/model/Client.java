@@ -1,6 +1,9 @@
 package com.proiectBD.hotel.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -17,6 +20,12 @@ public class Client {
     private String cont_online;
     private String email;
     private String parola;
+
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Recenzie> recenzie = new ArrayList<>();
 
     public int getId_client() {
         return id_client;
