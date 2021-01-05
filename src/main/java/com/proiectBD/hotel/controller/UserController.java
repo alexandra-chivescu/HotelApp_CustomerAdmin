@@ -4,10 +4,7 @@ import com.proiectBD.hotel.dao.*;
 import com.proiectBD.hotel.model.*;
 import com.proiectBD.hotel.security.ClientSession;
 import com.proiectBD.hotel.security.Encryption;
-import com.proiectBD.hotel.service.CameraService;
-import com.proiectBD.hotel.service.ClientService;
-import com.proiectBD.hotel.service.RezervareService;
-import com.proiectBD.hotel.service.Tip_cameraService;
+import com.proiectBD.hotel.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
@@ -62,6 +59,15 @@ public class UserController {
 
     @Autowired
     Date_facturaDao date_facturaDao;
+
+    @Autowired
+    Cazari_aziDao cazari_aziDao;
+
+    @Autowired
+    DepartamentDao departamentDao;
+
+    @Autowired
+    DepartamentService departamentService;
 
     @GetMapping("/menu")
     public ModelAndView menu() {
@@ -261,6 +267,37 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/tabelcazari")
+    public ModelAndView tabelCazari() {
+        ModelAndView modelAndView = new ModelAndView("tabelcazari.html");
+        List<Cazari_astazi> cazari = cazari_aziDao.findAll();
+        modelAndView.addObject("cazari", cazari);
+        return modelAndView;
+    }
+
+    @GetMapping("/tabeldepartamente")
+    public ModelAndView tabelDepartamente() {
+        ModelAndView modelAndView = new ModelAndView("tabeldepartamente.html");
+
+        List<Departament> departamente = departamentDao.findAll();
+        modelAndView.addObject("departamente", departamente);
+        return modelAndView;
+    }
+
+    @GetMapping("departamente/delete/{id}")
+    public ModelAndView deleteDepartament(@PathVariable(value="id") int id, Model model) {
+        Departament departament = departamentDao.findById(id);
+        departamentDao.delete(departament);
+        model.addAttribute("departamente",departamentDao.findAll());
+        return new ModelAndView("redirect:/tabeldepartamente");
+    }
+
+    @GetMapping("/add-new-departament")
+    public ModelAndView AddNewDepartament(@RequestParam("nume_departament") String nume_departament) {
+
+        departamentService.save_new_departament(nume_departament);
+        return new ModelAndView("redirect:/tabeldepartamente");
+    }
 
     @PostMapping("/add-to-cart")
     public ModelAndView addToCart(@RequestParam("checkInDate") String checkInDate,

@@ -11,4 +11,6 @@ import java.util.List;
 @Component
 public interface DepartamentDao extends CrudRepository<Departament, Integer> {
     List<Departament> findAll();
+
+    Departament findById(int id);
 }
