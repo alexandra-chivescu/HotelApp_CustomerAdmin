@@ -11,4 +11,6 @@ import java.util.List;
 @Component
 public interface FunctieDao extends CrudRepository<Functie, Integer> {
     List<Functie> findAll();
+
+    Functie findById(int id);
 }

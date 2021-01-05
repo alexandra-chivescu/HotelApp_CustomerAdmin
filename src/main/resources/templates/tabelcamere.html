@@ -84,24 +84,47 @@
     <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
         <thead>
         <tr>
-            <th scope="col">Departament</th>
-            <th scope="col">Salariu maxim</th>
-            <th scope="col">Salariu minim</th>
-            <th scope="col">Salariu mediu</th>
+            <th scope="col">Nr camera</th>
+            <th scope="col">Tip camera</th>
+            <th scope="col">Pret</th>
+            <th scope="col">Capacitate</th>
+            <th scope="col">Editare</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="salariu,iStat:${salarii}"
+        <tr th:each="camera,iStat:${camere}"
             th:style="${iStat.odd}? 'font-weight: bold;'"
             th:alt-title="${iStat.even}? 'even' : 'odd'"
             th:with="one=1">
-            <td style = "word-wrap: break-word;" th:text="${salariu.nume_departament}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.maxsal}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.minsal}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.medie}"></td>
-        </tr>
+                <td style = "word-wrap: break-word;" th:text="${camera.nr_camera}"></td>
+                <td style = "word-wrap: break-word;" th:text="${camera.tip}"></td>
+                <td style = "word-wrap: break-word;" th:text="${camera.pret}"></td>
+                <td style = "word-wrap: break-word;" th:text="${camera.capacitate}"></td>
+                <td><a th:href="@{/camera/delete/{id}(id=${camera.nr_camera})}" class="btn btn-primary"><i class="fas fa-trash-alt"></i></a>
+                    <a th:href="@{/camera/edit/{id}(id=${camera.nr_camera})}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
+            </tr>
         </tbody>
     </table>
+    <form action="add-new-camera" method="get">
+        <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+            <thead>
+            <tr>
+                <th scope="col">Tip camera</th>
+                <th scope="col">Pret</th>
+                <th scope="col">Capacitate</th>
+                <th scope="col">Adauga camera</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input name="tip" class="form-control"></td>
+                <td><input name="pret" class="form-control"></td>
+                <td><input name="capacitate" class="form-control"></td>
+                <td><button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
     <br>
     <br>
     <br>

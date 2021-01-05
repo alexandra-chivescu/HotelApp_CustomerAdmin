@@ -81,33 +81,48 @@
 <br>
 
 <div class="center bg-white p-3 mb-3 mt-5 rounded" style="width:100%; padding-left:15px; padding-right:15px; margin-left:10px; margin-right:10px;">
-    <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
-        <thead>
-        <tr>
-            <th scope="col">Departament</th>
-            <th scope="col">Salariu maxim</th>
-            <th scope="col">Salariu minim</th>
-            <th scope="col">Salariu mediu</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="salariu,iStat:${salarii}"
-            th:style="${iStat.odd}? 'font-weight: bold;'"
-            th:alt-title="${iStat.even}? 'even' : 'odd'"
-            th:with="one=1">
-            <td style = "word-wrap: break-word;" th:text="${salariu.nume_departament}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.maxsal}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.minsal}"></td>
-            <td style = "word-wrap: break-word;" th:text="${salariu.medie}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-    <br>
-    <br>
-    <form action="/logout">
-        <button type="submit" class = "btn btn-secondary" style = "color: #fff; background-color: #fe9736; border-color: #fe9736;">Logout</button>
-    </form>
+        <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+                <thead>
+                <tr>
+                    <th scope="col">Id functie</th>
+                    <th scope="col">Nume functie</th>
+                    <th scope="col">Editare</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="fct,iStat:${functii}"
+                    th:style="${iStat.odd}? 'font-weight: bold;'"
+                    th:alt-title="${iStat.even}? 'even' : 'odd'"
+                    th:with="one=1">
+                        <td style = "word-wrap: break-word;" th:text="${fct.id_functie}"></td>
+                        <td style = "word-wrap: break-word;" th:text="${fct.nume_functie}"></td>
+                        <td><a th:href="@{/fct/delete/{id}(id=${fct.id_functie})}" class="btn btn-primary"><i class="fas fa-trash-alt"></i></a>
+                            <a th:href="@{/fct/edit/{id}(id=${fct.nume_functie})}" class="btn btn-primary"><i class="fas fa-edit"></i></a> </td>
+                </tr>
+                </tbody>
+        </table>
+        <form action="add-new-fct" method="get">
+            <table class="table table-bordered table-striped" style="table-layout: fixed; width: 100%;">
+                <thead>
+                <tr>
+                    <th scope="col">Nume functie</th>
+                    <th scope="col">Adauga functie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input name="nume_fct" class="form-control"></td>
+                    <td><button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <br>
+        <br>
+        <br>
+        <form action="/logout">
+            <button type="submit" class = "btn btn-secondary" style = "color: #fff; background-color: #fe9736; border-color: #fe9736;">Logout</button>
+        </form>
 </div>
 </body>
 </html>

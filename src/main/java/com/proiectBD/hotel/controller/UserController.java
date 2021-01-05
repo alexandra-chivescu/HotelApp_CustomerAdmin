@@ -69,6 +69,18 @@ public class UserController {
     @Autowired
     DepartamentService departamentService;
 
+    @Autowired
+    FunctieDao functieDao;
+
+    @Autowired
+    FunctieService functieService;
+
+    @Autowired
+    Detalii_cameraDao detalii_cameraDao;
+
+    @Autowired
+    Detalii_cameraService detalii_cameraService;
+
     @GetMapping("/menu")
     public ModelAndView menu() {
         ModelAndView registerMV = new ModelAndView("index.html");
@@ -284,7 +296,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("departamente/delete/{id}")
+    @GetMapping("dept/delete/{id}")
     public ModelAndView deleteDepartament(@PathVariable(value="id") int id, Model model) {
         Departament departament = departamentDao.findById(id);
         departamentDao.delete(departament);
@@ -297,6 +309,56 @@ public class UserController {
 
         departamentService.save_new_departament(nume_departament);
         return new ModelAndView("redirect:/tabeldepartamente");
+    }
+
+    @GetMapping("/tabelfunctii")
+    public ModelAndView tabelFunctii() {
+        ModelAndView modelAndView = new ModelAndView("tabelfunctii.html");
+
+        List<Functie> functii = functieDao.findAll();
+        modelAndView.addObject("functii", functii);
+        return modelAndView;
+    }
+
+    @GetMapping("fct/delete/{id}")
+    public ModelAndView deleteFunctie(@PathVariable(value="id") int id, Model model) {
+        Functie functie = functieDao.findById(id);
+        functieDao.delete(functie);
+        model.addAttribute("functii",functieDao.findAll());
+        return new ModelAndView("redirect:/tabelfunctii");
+    }
+
+    @GetMapping("/add-new-fct")
+    public ModelAndView AddNewFunctie(@RequestParam("nume_fct") String nume_functie) {
+
+        functieService.save_new_functie(nume_functie);
+        return new ModelAndView("redirect:/tabelfunctii");
+    }
+
+    @GetMapping("/tabelcamere")
+    public ModelAndView tabelCamere() {
+        ModelAndView modelAndView = new ModelAndView("tabelcamere.html");
+
+        List<Detalii_camera> detalii_camera = detalii_cameraDao.findAll();
+        modelAndView.addObject("camere", detalii_camera);
+        return modelAndView;
+    }
+
+    @GetMapping("camera/delete/{id}")
+    public ModelAndView deleteCamera(@PathVariable(value="id") int id, Model model) {
+        Detalii_camera detalii_camera = detalii_cameraDao.findById(id);
+        detalii_cameraDao.delete(detalii_camera);
+        model.addAttribute("camere",detalii_cameraDao.findAll());
+        return new ModelAndView("redirect:/tabelcamere");
+    }
+
+    @GetMapping("/add-new-camera")
+    public ModelAndView AddNewCamera(@RequestParam("tip") String tip,
+                                     @RequestParam("pret") float pret,
+                                     @RequestParam("capacitate") int capacitate) {
+
+        detalii_cameraService.save_new_det_camera(tip, pret, capacitate);
+        return new ModelAndView("redirect:/tabelcamere");
     }
 
     @PostMapping("/add-to-cart")
